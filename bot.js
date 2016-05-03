@@ -3,6 +3,8 @@
 var telegram = require('telegram-bot-api');
 var Config = require('./config.js');
 
+var Commands = require('./commands/commands.js');
+
 var api = new telegram({
 	token: Config.token,
 	updates: {
@@ -13,8 +15,14 @@ var api = new telegram({
 
 api.on('message', function(message) {
 	// Received text message
-	console.log('received text message:');
-	console.log(message);
+	console.log('received text message');
+
+	var command = Commands.detectCommand(api, message);
+
+	if(command === false) {
+		console.log("No command detected...");
+		console.log(message);
+	}
 });
 
 api.on('inline.query', function(message) {
