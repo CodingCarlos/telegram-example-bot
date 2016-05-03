@@ -1,7 +1,14 @@
+// Telegram bot
+
 var telegram = require('telegram-bot-api');
+var Config = require('./config.js');
 
 var api = new telegram({
-	token: '<PUT YOUR TOKEN HERE>'
+	token: Config.token,
+	updates: {
+		enabled: true,
+		get_interval: 1000
+	}
 });
 
 api.on('message', function(message) {
@@ -35,4 +42,3 @@ api.on('update', function(message) {
 	console.log('generic update object:');
 	console.log(message);
 });
-
